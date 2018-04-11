@@ -1,4 +1,4 @@
-	var movies = [
+var movies = [
 	{
 		id: 1,
 		title: 'Harry Potter',
@@ -32,13 +32,26 @@
 ];
 
 
+//Movie
 
+var Movie = React.createClass({
+	propTypes:{
+		movie: React.PropTypes.object.isRequired,
+	},
+	render: function(){
+		return( React.createElement('li', {},
+					React.createElement(MovieTitle, this.props.movie.title), //instancje
+					React.createElement(MovieDescription, this.props.movie.desc),
+					React.createElement(MoviePoster, this.props.movie.image))
+			   );
+	}
+});
 
 //Title
 
 var MovieTitle = React.createClass({
 	propTypes:{
-		title: React.PropTypes.object.isRequired,
+		title: React.PropTypes.string.isRequired,
 	},
 
 	render: function(){
@@ -51,7 +64,7 @@ var MovieTitle = React.createClass({
 
 var MovieDescription = React.createClass({
 	propTypes:{
-		desc: React.PropTypes.object.isRequired,
+		desc: React.PropTypes.string.isRequired,
 	},
 
 	render: function(){
@@ -73,22 +86,26 @@ var MoviePoster = React.createClass({
 	}
 });
 
-//Movie List
+// Movie List
 
-var MoviesList = React.createClass({
-	render: function(){
-		return (React.createElement('div', {},
-					React.createElement('h1', {}, 'Lista Filmów'),
-					React.createElement('ul', {}, 
-						React.createElement('li', {key: this.props.movie.id},
-							React.createElement(MovieTitle, this.props.movie.title),
-							React.createElement(MovieDescription, this.props.movie.desc),
-							React.createElement(MoviePoster, this.props.movie.image)
-						)		
-				));
+MovieList = React.createClass({
+  propTypes: {
+    movie: React.PropTypes.array.isRequired
+  },
+
+  render: function(){
+  	var moviesElements = movies.map(function(movie){
+  		return React.createElement(Movie ,{key: movie.id ,movie: movie});
+  		});
+
+    return React.createElement('ul', {}, moviesElements);
 	}
 });
 
+var element = 
+	React.createElement('div', {},
+		React.createElement('h1', {}, 'Lista Filmów'),
+		React.createElement(MovieList, {movies: movies})
+		);
 
-
-
+ReactDOM.render(element, document.getElementById('app'));
