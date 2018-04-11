@@ -4,7 +4,7 @@ var movies = [
 		title: 'Harry Potter',
 		desc: 'Film o czarodzieju',
 		image: 'https://i.ebayimg.com/images/g/Z54AAOSwnFZXV1Eh/s-l300.jpg'
-	},														//Tablica z obiekatmi
+	},														
 	{
 		id: 2,
 		title: 'Król Lew',
@@ -40,9 +40,9 @@ var Movie = React.createClass({
 	},
 	render: function(){
 		return( React.createElement('li', {},
-					React.createElement(MovieTitle, this.props.movie.title), //instancje
-					React.createElement(MovieDescription, this.props.movie.desc),
-					React.createElement(MoviePoster, this.props.movie.image))
+					React.createElement(MovieTitle, {title: this.props.movie.title}), //instancje
+					React.createElement(MovieDescription, {desc: this.props.movie.desc}),
+					React.createElement(MoviePoster, {image: this.props.movie.image}))
 			   );
 	}
 });
@@ -55,7 +55,7 @@ var MovieTitle = React.createClass({
 	},
 
 	render: function(){
-		return(	React.createElement('h2', {}, this.props.movie.title) //funkcja render zawsze zwraca (return) ReactElement
+		return(	React.createElement('h2', {}, this.props.title) //funkcja render zawsze zwraca (return) ReactElement
 		);
 	}
 });
@@ -68,7 +68,7 @@ var MovieDescription = React.createClass({
 	},
 
 	render: function(){
-		return ( React.createElement('p', {}, this.props.movie.desc)
+		return ( React.createElement('p', {}, this.props.desc)
 		);
 	}
 });
@@ -81,7 +81,7 @@ var MoviePoster = React.createClass({
 	},
 
 	render: function(){
-		return (React.createElement('img', {src: this.props.movie.image})
+		return (React.createElement('img', {src: this.props.image})
 		);
 	}
 });
