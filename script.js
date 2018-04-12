@@ -39,10 +39,10 @@ var Movie = React.createClass({
 		movie: React.PropTypes.object.isRequired,
 	},
 	render: function(){
-		return( React.createElement('li', {},
-					React.createElement(MovieTitle, {title: this.props.movie.title}), //instancje
-					React.createElement(MovieDescription, {desc: this.props.movie.desc}),
-					React.createElement(MoviePoster, {image: this.props.movie.image}))
+		return( React.createElement('li', {}, // Tworzę 3 elementy wewnątrz elementu li!
+					React.createElement(MovieTitle, {title: this.props.movie.title}), // do komponentu przekazuje title w {...}
+					React.createElement(MovieDescription, {desc: this.props.movie.desc}), // do komponentu przekazuje desc w {...}
+					React.createElement(MoviePoster, {image: this.props.movie.image})) // do komponentu przekazuje image w {...}
 			   );
 	}
 });
@@ -77,7 +77,7 @@ var MovieDescription = React.createClass({
 
 var MoviePoster = React.createClass({
 	propTypes: {
-		image: React.PropTypes.object.isRequired,
+		image: React.PropTypes.string.isRequired,
 	},
 
 	render: function(){
@@ -90,12 +90,12 @@ var MoviePoster = React.createClass({
 
 MovieList = React.createClass({
   propTypes: {
-    movie: React.PropTypes.array.isRequired
+    movies: React.PropTypes.array.isRequired
   },
 
   render: function(){
   	var moviesElements = movies.map(function(movie){
-  		return React.createElement(Movie ,{key: movie.id ,movie: movie});
+  		return React.createElement(Movie ,{key: movie.id ,movie: movie}); // key przekazujemy, żeby każdy element był unikatowwy
   		});
 
     return React.createElement('ul', {}, moviesElements);
@@ -105,7 +105,8 @@ MovieList = React.createClass({
 var element = 
 	React.createElement('div', {},
 		React.createElement('h1', {}, 'Lista Filmów'),
-		React.createElement(MovieList, {movies: movies})
+		React.createElement(MovieList, {movies: movies}), // w movies,
+		console.log(movies)
 		);
 
 ReactDOM.render(element, document.getElementById('app'));
